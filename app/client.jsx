@@ -2,6 +2,7 @@ import '@babel/polyfill'
 import React from 'react'
 import { render } from 'react-dom'
 
+// Second Iframe for testing.
 export default class IframeComponent extends React.Component {
   render () {
     return (
@@ -31,13 +32,10 @@ class App extends React.Component {
       {
         path: 'localhost:3000/WebViewer/lib',
         initialDoc: '{{ PATH_PREFIX }}/dummy.pdf',
-        // config: '/test.js',
       },
       document.getElementById('a'),
     )
     // .then(instance => {
-    //   console.log('Instance: ', instance)
-    //   console.log('instance.iframeWindow;: ', instance.iframeWindow)
     //   instance.iframeWindow.addEventListener('loaderror', function (err) {
     //     // Do something with error. eg. instance.showErrorMessage('An error has occurred')
     //     instance.showErrorMessage('An error has occurred')
@@ -91,16 +89,16 @@ class App extends React.Component {
     return (
       <div className='App' style={{ height: '90vh' }}>
         <div className='header'>React sample</div>
-        <IframeComponent
+        {/* <IframeComponent
           src='https://angular-todolist-materialui.stackblitz.io/'
           height='100%'
           width='45%'
-        />
+        /> */}
         <div
           className='webviewer'
           id='a'
           ref={this.viewer}
-          style={{ height: '100%' }}
+          style={{ height: '100%', border: '1px solid' }}
         />
       </div>
     )
