@@ -6,6 +6,7 @@ const path = require('path')
 const Webpack = require('webpack')
 const wpConfig = require('../webpack.dev.js')
 const fs = require('fs')
+var cors = require('cors')
 
 const app = express()
 const compiler = Webpack(wpConfig)
@@ -14,6 +15,7 @@ const compiler = Webpack(wpConfig)
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cookieParser())
+app.use(cors())
 
 // Set up webpack dev server middleware
 const WebpackMiddleware = require('webpack-dev-middleware')(compiler, {
@@ -48,11 +50,17 @@ function parseConditionals (str, data) {
 }
 
 WebpackMiddleware.waitUntilValid(() => {
-  app.get('*', (req, res) => {
+  // app.get('/products/:id', function (req, res, next) {
+  //   res.json({msg: 'This is CORS-enabled for all origins!'})
+  // })
+
+  app.get('*', cors(), (req, res) => {
     // handling for static files in dev server
-    if (/.(png|ico|xml|json|js)$/.test(req.path)) {
-      res.sendFile(path.resolve(__dirname, `../public${req.path}`))
-    } else {
+    if (/public\/index\.html || \/ /.test(req.path)) {
+      if (/.(png|ico|xml|json|js)$/.test(req.path)) {
+        res.sendFile(path.resolve(__dirname, `../public${req.path}`))
+      }
+      console.log('Serve : ', req.path)
       const cookies = req.cookies
       const locale = cookies.I18N_MOCK || 'en_US'
 
@@ -74,6 +82,7 @@ WebpackMiddleware.waitUntilValid(() => {
           if (err) {
             return err
           }
+
           const response = Object.keys(settings).reduce((str, key) => {
             const regex = new RegExp(`{{ ${key} }}`, 'gm')
             return str.replace(regex, settings[key])
@@ -82,6 +91,9 @@ WebpackMiddleware.waitUntilValid(() => {
           res.send(parseConditionals(response, settings))
         },
       )
+    } else {
+      console.log('ELSE Serve index.html')
+      res.sendFile(path.resolve(__dirname, `../public${req.path}`))
     }
   })
 

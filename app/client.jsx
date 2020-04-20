@@ -28,44 +28,46 @@ class App extends React.Component {
   }
 
   componentDidMount () {
-    new window.WebViewer(
-      {
-        path: 'localhost:3000/WebViewer/lib',
-        initialDoc: '{{ PATH_PREFIX }}/dummy.pdf',
-      },
-      document.getElementById('a'),
-    )
-    // .then(instance => {
-    //   instance.iframeWindow.addEventListener('loaderror', function (err) {
-    //     // Do something with error. eg. instance.showErrorMessage('An error has occurred')
-    //     instance.showErrorMessage('An error has occurred')
-    //   })
-    //   // at this point, the viewer is 'ready'
-    //   // call methods from instance, docViewer and annotManager as needed
-    //   this.instance = instance
-    //   this.docViewer = instance.docViewer
-    //   this.annotManager = instance.annotManager
+    window
+      .WebViewer(
+        {
+          path: '/WebViewer/lib',
+          initialDoc: '/dummy.pdf',
+        },
+        document.getElementById('a'),
+      )
+      .then(instance => {
+        alert('Here')
+        instance.iframeWindow.addEventListener('loaderror', function (err) {
+          // Do something with error. eg. instance.showErrorMessage('An error has occurred')
+          instance.showErrorMessage('An error has occurred')
+        })
+        // at this point, the viewer is 'ready'
+        // call methods from instance, docViewer and annotManager as needed
+        this.instance = instance
+        this.docViewer = instance.docViewer
+        this.annotManager = instance.annotManager
 
-    //   // you can also access major namespaces from the instance as follows:
-    //   // var Tools = instance.Tools;
-    //   // var Annotations = instance.Annotations;
+        // you can also access major namespaces from the instance as follows:
+        // var Tools = instance.Tools;
+        // var Annotations = instance.Annotations;
 
-    //   // now you can access APIs through `this.instance`
-    //   this.instance.openElement('notesPanel')
+        // now you can access APIs through `this.instance`
+        this.instance.openElement('notesPanel')
 
-    //   // or listen to events from the viewer element
-    //   this.viewer.current.addEventListener('pageChanged', e => {
-    //     const [pageNumber] = e.detail
-    //     console.log(`Current page is ${pageNumber}`)
-    //   })
+        // or listen to events from the viewer element
+        this.viewer.current.addEventListener('pageChanged', e => {
+          const [pageNumber] = e.detail
+          console.log(`Current page is ${pageNumber}`)
+        })
 
-    //   // or from the docViewer instance
-    //   this.docViewer.on('annotationsLoaded', () => {
-    //     console.log('annotations loaded')
-    //   })
+        // or from the docViewer instance
+        this.docViewer.on('annotationsLoaded', () => {
+          console.log('annotations loaded')
+        })
 
-    //   this.docViewer.on('documentLoaded', this.wvDocumentLoadedHandler)
-    // })
+        this.docViewer.on('documentLoaded', this.wvDocumentLoadedHandler)
+      })
   }
 
   wvDocumentLoadedHandler = () => {
