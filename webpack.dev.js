@@ -23,7 +23,7 @@ module.exports = {
     client: [
       // 'babel-polyfill',
       // 'webpack-hot-middleware/client',
-      // 'webpack/hot/only-dev-server',
+      'webpack/hot/only-dev-server',
       path.resolve(__dirname, './app/client'),
     ],
   },

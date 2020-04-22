@@ -56,11 +56,10 @@ WebpackMiddleware.waitUntilValid(() => {
 
   app.get('*', cors(), (req, res) => {
     // handling for static files in dev server
-    if (/public\/index\.html || \/ /.test(req.path)) {
-      if (/.(png|ico|xml|json|js)$/.test(req.path)) {
-        res.sendFile(path.resolve(__dirname, `../public${req.path}`))
-      }
-      console.log('Serve : ', req.path)
+    if (/public\/index\.html$/.test(req.path) || req.path === '/') {
+      // if (/.(png|ico|xml|json|js)$/.test(req.path)) {
+      //   res.sendFile(path.resolve(__dirname, `../public${req.path}`))
+      // }
       const cookies = req.cookies
       const locale = cookies.I18N_MOCK || 'en_US'
 
