@@ -91,7 +91,6 @@ WebpackMiddleware.waitUntilValid(() => {
         },
       )
     } else {
-      console.log('ELSE Serve index.html')
       res.sendFile(path.resolve(__dirname, `../public${req.path}`))
     }
   })

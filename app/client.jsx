@@ -2,22 +2,6 @@ import '@babel/polyfill'
 import React from 'react'
 import { render } from 'react-dom'
 
-// Second Iframe for testing.
-export default class IframeComponent extends React.Component {
-  render () {
-    return (
-      <div>
-        <iframe
-          src={this.props.src}
-          height={this.props.height}
-          width={this.props.width}
-          className='fullheight'
-        />
-      </div>
-    )
-  }
-}
-
 class App extends React.Component {
   constructor () {
     super()
@@ -37,10 +21,9 @@ class App extends React.Component {
         document.getElementById('a'),
       )
       .then(instance => {
-        alert('Here')
         instance.iframeWindow.addEventListener('loaderror', function (err) {
           // Do something with error. eg. instance.showErrorMessage('An error has occurred')
-          instance.showErrorMessage('An error has occurred')
+          instance.showErrorMessage('An error has occurred: ', err)
         })
         // at this point, the viewer is 'ready'
         // call methods from instance, docViewer and annotManager as needed
@@ -87,15 +70,10 @@ class App extends React.Component {
   }
 
   render () {
-    console.log('Viewer: ', this.viewer)
     return (
       <div className='App' style={{ height: '90vh' }}>
         <div className='header'>React sample</div>
-        {/* <IframeComponent
-          src='https://angular-todolist-materialui.stackblitz.io/'
-          height='100%'
-          width='45%'
-        /> */}
+
         <div
           className='webviewer'
           id='a'
