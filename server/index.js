@@ -1,4 +1,4 @@
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3006
 const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
@@ -19,7 +19,7 @@ app.use(cors())
 
 // Set up webpack dev server middleware
 const WebpackMiddleware = require('webpack-dev-middleware')(compiler, {
-  port: 3000,
+  port: 3006,
   hot: true,
   publicPath: wpConfig.output.publicPath,
   writeToDisk: true,

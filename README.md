@@ -14,4 +14,4 @@ PDFTron implementation in this project along with Webpack.
   > yarn run dev
 ```
 
-watch the output on ```localhost:3000```
+watch the output on ```localhost:3006```
